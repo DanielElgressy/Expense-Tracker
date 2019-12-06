@@ -28,7 +28,7 @@ class Transaction extends Component {
 
         return (
             <TableRow key={transaction.id}>
-                <TableCell align={TableTextAlign}>{transaction.amount}</TableCell>
+                <TableCell style={{ color: (transaction.amount < 0) ? 'red' : 'none'}} align={TableTextAlign}>{transaction.amount}</TableCell>
                 <TableCell align={TableTextAlign}>{transaction.category}</TableCell>
                 <TableCell align={TableTextAlign}>{transaction.vendor}</TableCell>
                 <TableCell align={TableTextAlign}>

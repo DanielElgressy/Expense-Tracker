@@ -108,7 +108,6 @@ class App extends Component {
                   </TableRow>
                 </TableHead>
                 <Route path="/" exact render={() => <Transactions state={state}  removeTransaction={this.removeTransaction}/>} />
-                {/* <Route path="/" exact render={({ match }) => <Transactions match={match} state={state} removeTransaction={this.removeTransaction} />} /> */}
               </Table>
             </Paper>
 
