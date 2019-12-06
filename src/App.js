@@ -32,7 +32,7 @@ class App extends Component {
 
   showBalance() {
     const dataArr = this.state.data
-    let balance = 10000
+    let balance = 0
     for (let i = 0; i < dataArr.length; i++) {
       balance += dataArr[i].amount
     }
@@ -41,10 +41,12 @@ class App extends Component {
 
 
   removeTransaction = transID => {
-    // const newData = [...this.state.data]
-    // let transaction = newData.find(t => t.id === transID)
-    // newData.splice(transaction,0)
-    console.log(transID)
+    let newData = [...this.state.data]
+    const transaction = newData.findIndex(t => t.id === transID)
+    newData.splice(transaction,1)
+    this.setState({
+      data : newData
+    })
   }
 
   render() {
