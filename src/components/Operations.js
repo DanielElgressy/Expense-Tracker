@@ -8,46 +8,58 @@ import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-
-
-
 
 
 class Operations extends Component {
 
-
-    handleClose () {
-        console.log("close")
+    constructor(){
+        super();
+        this.handleClose = this.handleClose.bind(this);
     }
 
     handleInput (e) {
         console.log(e.target.value)
+        if (e.target.value < 0) {
+            console.log("this is a minus number")
+            alert("insert amount greater then zero") 
+        }
     }
- 
+
+
+    handleClose() {
+        console.log("close")
+        console.log(this.props.state.dialogBox)
+        // let currentStatus = [...this.props.state.dialogBox]
+        // let opposite = false
+        this.props.changeDialogValue()
+
+        
+    }
+
+
     render() {
 
+     
         return (
             <Router>
 
-                <Dialog open={true}  aria-labelledby="form-dialog-title">
+                <Dialog open={this.props.state.dialogBox}  aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Adding a Transaction</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            please decribe transaction
-                        </DialogContentText>
+
                         <TextField onChange={this.handleInput} style={{ margin: "10px"}} 
                             autoFocus
                             margin="dense"
                             id="standard-required"
                             label="Amount"
                             type="number"
+
                         />
                              <TextField style={{ margin: "10px"}}
                             autoFocus
                             margin="dense"
-                            id="name"
+                            id="standard-search"
                             label="Vendor"
                             type="search"
                             

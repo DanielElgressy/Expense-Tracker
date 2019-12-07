@@ -28,7 +28,9 @@ class App extends Component {
           { amount: -20, vendor: "Subway", category: "Food", id: 3 },
           { amount: -98, vendor: "La Baguetterie", category: "Food", id: 4 }
         ]
-    }
+        ,
+      dialogBox: true
+    }   
   }
 
   showBalance() {
@@ -40,6 +42,14 @@ class App extends Component {
     return balance.toLocaleString('en-US')
   }
 
+  changeDialogValue = () =>{
+    const currentValue = this.state.dialogBox
+    console.log(currentValue)
+    let opposite = !currentValue 
+    this.setState({
+      dialogBox : opposite
+    })    
+  }
 
   removeTransaction = transID => {
     let newData = [...this.state.data]
@@ -85,11 +95,11 @@ class App extends Component {
                 </Button>
               </Link>
 
-              <Link to="/operations" style={{ textDecoration: 'none' }}>
-                <Button variant="contained" color="primary">
+              {/* <Link to="/" style={{ textDecoration: 'none' }}> */}
+                <Button variant="contained" color="primary" onClick={this.changeDialogValue}>
                   Operations
                 </Button>
-              </Link>
+              {/* </Link> */}
             </div>
 
           </div>
@@ -101,7 +111,7 @@ class App extends Component {
               <Table className="table" aria-label="simple table">
                 <TableHead className="tHeader">
                   <TableRow >
-                    <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Amount</TableCell>
+                    <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Amount ($)</TableCell>
                     <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Category</TableCell>
                     <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Vendor</TableCell>
                   <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>action</TableCell>
@@ -111,7 +121,7 @@ class App extends Component {
               </Table>
             </Paper>
 
-            <Route path="/operations" exact render={() => <Operations state={state}/>} />
+            <Operations state={state} changeDialogValue={this.changeDialogValue} />
 
           </div>
 

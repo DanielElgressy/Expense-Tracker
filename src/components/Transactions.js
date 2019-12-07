@@ -7,7 +7,7 @@ import TableBody from '@material-ui/core/TableBody';
 
 class Transactions extends Component {
 
-
+    
 
     render() {
  
