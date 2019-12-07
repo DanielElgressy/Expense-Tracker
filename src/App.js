@@ -39,7 +39,7 @@ class App extends Component {
     for (let i = 0; i < dataArr.length; i++) {
       balance += dataArr[i].amount
     }
-    return balance
+    return balance.toLocaleString()
   }
 
   changeDialogValue = () =>{
@@ -63,11 +63,23 @@ class App extends Component {
     let newData = [...this.state.data]
     let newTrans = trans
     newData.unshift(newTrans)
-    this.setState({
-      data : newData
-    } , () => {
-      this.changeDialogValue()
-    })
+
+
+    let balance = 0   //ירוץ על המערך לאחר הפעולה שביצעתי למשיכה או הפקדה
+    for (let i = 0; i < newData.length; i++) {
+      balance += newData[i].amount
+    }
+
+     if (balance < 500 & trans.amount < 0 ) {   //גם פחות מהרף שאני מציב וגם נלחץ על כפתור משיכה שמאופיין במינוס
+       alert("you dont havee alot of money, calm down")
+     } else {
+      this.setState({
+        data : newData
+      } , () => {
+        this.changeDialogValue()
+      })
+     }
+   
     
   }
 

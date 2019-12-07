@@ -45,7 +45,6 @@ class Operations extends Component {
             id: randomID
         }, () => {
             let newTranstation = { ...this.state }
-            console.log(newTranstation)
             this.props.addTransaction(newTranstation)
         })
     }
@@ -81,6 +80,7 @@ class Operations extends Component {
 
     handleWithdraw = () => {
         let minusizing = this.state.amount * -1
+        console.log(this.props.state)
         this.setState({
             amount : minusizing
         }, () => {
