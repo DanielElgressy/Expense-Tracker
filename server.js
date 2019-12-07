@@ -9,7 +9,9 @@ const Schema = mongoose.Schema
 const transactionSchema  = new Schema ({
     amount: Number,
     category: String,
-    vendor: String
+    vendor: String,
+    date: Date,
+    id: Number
 })
 
 const Transaction =  mongoose.model("Transaction", transactionSchema )
@@ -20,22 +22,26 @@ const Transaction =  mongoose.model("Transaction", transactionSchema )
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
-// app.get('/things',async function(req,res){
-//    const things = Thing.find({})
-//    res.send(things)
-// })
-
-
-// app.post('/thing',async function(req,res){
-//    const thing = new Thing(req.body)
-//    await thing.save()
-// })
+app.get('/transactions',async function(req,res){
+   const transactions =await  Transaction.find({})
+   res.send(transactions)
+})
 
      
-// app.post('/thing',async function(req,res){
-//    const thing = new Thing(req.body)
-//    await thing.save()
-// })
+app.post('/transaction',async function(req,res){
+   const transaction = new Transaction(req.body)
+   await transaction.save()
+   res.end()
+})
+
+app.delete('/transaction/:transactionID', async function (req, res) {
+    let transactionID = req.params.transactionID
+       let deleteTransaction = await Transaction.remove({
+        id: transactionID
+    })
+    res.send(`Transaction: ${transactionID} deleted from DB`) 
+})
+
 
 
 const port = 3001

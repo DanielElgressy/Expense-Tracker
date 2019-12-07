@@ -7,21 +7,18 @@ import TableBody from '@material-ui/core/TableBody';
 
 class Transactions extends Component {
 
-    
 
     render() {
  
         const data = this.props.state.data
         
-
         return (
-            <TableBody>
+            <TableBody >
                     {data.map(
                         t => <Transaction {...this.props} transaction={t} /> 
                         )}
             </TableBody>
         )
-
-        }
+    }
 }
 export default Transactions;

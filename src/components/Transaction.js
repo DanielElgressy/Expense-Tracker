@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
-// import { Link } from 'react-router-dom';
-
-// import '../styles/Landing.css'
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-// import Button from '@material-ui/core/Button';
 
 
 
@@ -34,18 +30,6 @@ class Transaction extends Component {
                     <IconButton  aria-label="delete" onClick={this.removeTransaction}>
                         <DeleteIcon />
                     </IconButton>
-
-                    {/* <div className="rent" name={m.id} onClick={this.changeRentStatus}>{m.isRented ? "-" : "+"}</div> */}
-
-{/* 
-
-                    <Button
-                        variant="contained"
-                        color="secondary"
-                        startIcon={<DeleteIcon />}
-                    >
-                        Delete
-                     </Button> */}
 
                 </TableCell>
 

@@ -26,16 +26,15 @@ class Operations extends Component {
     }
 
     sendAllInputs = () => {
-        const fullDate = new Date()
-        const getYear = fullDate.getFullYear()
-        const getmonth = fullDate.getMonth() + 1
-        const getDay = fullDate.getDay() + 1
-        const getDate = getDay + "/" + getmonth +"/" + getYear
-        const getHours = fullDate.getHours()
-        const getMinutes = fullDate.getMinutes()
-        const getTime = getHours + ":" + getMinutes
-        console.log(getDate +" " + getTime)
-        let currentDate = getDate +" " + getTime
+        const fullDate    = new Date()
+        const getYear     = fullDate.getFullYear()
+        const getmonth    = fullDate.getMonth() + 1
+        const getDay      = fullDate.getDay() + 1
+        const getDate     = getDay + "/" + getmonth +"/" + getYear
+        const getHours    = fullDate.getHours()
+        const getMinutes  = fullDate.getMinutes()
+        const getTime     = getHours + ":" + getMinutes
+        const currentDate = getDate +" " + getTime
 
         // let sendToSchema = {}
         let randomID = Math.floor(Math.random() * 100) + 1
@@ -96,7 +95,6 @@ class Operations extends Component {
 
 
     render() {
-
 
         return (
             <Router>
