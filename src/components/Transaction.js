@@ -12,10 +12,7 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 class Transaction extends Component {
 
-    // changeRentStatus = (event) => {
-    //     const movieId = Number(event.target.getAttribute('name'))
-    //     this.props.changeRentStatus(movieId)
-    // }
+
      removeTransaction = () => {
          const transactionID = this.props.transaction.id
          this.props.removeTransaction(transactionID)
@@ -28,6 +25,7 @@ class Transaction extends Component {
 
         return (
             <TableRow key={transaction.id}>
+                <TableCell align={TableTextAlign}>{transaction.createDate}</TableCell>
                 <TableCell style={{ color: (transaction.amount < 0) ? 'red' : 'none'}} align={TableTextAlign}>{transaction.amount}</TableCell>
                 <TableCell align={TableTextAlign}>{transaction.category}</TableCell>
                 <TableCell align={TableTextAlign}>{transaction.vendor}</TableCell>

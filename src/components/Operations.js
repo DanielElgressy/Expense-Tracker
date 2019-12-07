@@ -1,7 +1,7 @@
 // import React from 'react';
 import React, { Component } from 'react';
 
-import { BrowserRouter as Router, Link } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -13,78 +13,143 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 
 class Operations extends Component {
 
-    constructor(){
+    constructor() {
         super();
+        this.state = {
+
+            amount: "", vendor: "", category: "", id: ""
+
+        }
         this.handleClose = this.handleClose.bind(this);
+        this.handleAmountInput = this.handleAmountInput.bind(this);
+
     }
 
-    handleInput (e) {
-        console.log(e.target.value)
+    sendAllInputs = () => {
+        const fullDate = new Date()
+        const getYear = fullDate.getFullYear()
+        const getmonth = fullDate.getMonth() + 1
+        const getDay = fullDate.getDay() + 1
+        const getDate = getDay + "/" + getmonth +"/" + getYear
+        const getHours = fullDate.getHours()
+        const getMinutes = fullDate.getMinutes()
+        const getTime = getHours + ":" + getMinutes
+        console.log(getDate +" " + getTime)
+        let currentDate = getDate +" " + getTime
+
+        // let sendToSchema = {}
+        let randomID = Math.floor(Math.random() * 100) + 1
+        let transCreateDate = currentDate
+
+        this.setState({
+            createDate: transCreateDate,
+            id: randomID
+        }, () => {
+            let newTranstation = { ...this.state }
+            console.log(newTranstation)
+            this.props.addTransaction(newTranstation)
+        })
+    }
+
+
+    handleAmountInput(e) {
         if (e.target.value < 0) {
-            console.log("this is a minus number")
-            alert("insert amount greater then zero") 
+            alert("please insert a positive number")
+        } else {
+            this.setState({
+                amount: e.target.value
+            })
         }
     }
 
+    handleVendorInput = (e) => {
+        this.setState({
+            vendor: e.target.value
+        })
+
+    }
+
+    handleCategoryInput = (e) => {
+        this.setState({
+            category: e.target.value
+        })
+
+    }
+
+    handleDeposite = () => {
+        this.sendAllInputs()
+    }
+
+    handleWithdraw = () => {
+        let minusizing = this.state.amount * -1
+        this.setState({
+            amount : minusizing
+        }, () => {
+            this.sendAllInputs()
+
+        })
+    }
 
     handleClose() {
-        console.log("close")
-        console.log(this.props.state.dialogBox)
-        // let currentStatus = [...this.props.state.dialogBox]
-        // let opposite = false
         this.props.changeDialogValue()
-
-        
     }
 
 
     render() {
 
-     
+
         return (
             <Router>
 
-                <Dialog open={this.props.state.dialogBox}  aria-labelledby="form-dialog-title">
+                <Dialog open={this.props.state.dialogBox} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Adding a Transaction</DialogTitle>
                     <DialogContent>
 
-                        <TextField onChange={this.handleInput} style={{ margin: "10px"}} 
+                        <TextField onChange={this.handleAmountInput} style={{ margin: "10px" }}
                             autoFocus
                             margin="dense"
                             id="standard-required"
                             label="Amount"
                             type="number"
+                            
 
                         />
-                             <TextField style={{ margin: "10px"}}
+                        <TextField onChange={this.handleVendorInput} style={{ margin: "10px" }}
                             autoFocus
                             margin="dense"
                             id="standard-search"
                             label="Vendor"
                             type="search"
-                            
+
                         />
-                            <TextField style={{ margin: "10px"}}
+                        <TextField onChange={this.handleCategoryInput} style={{ margin: "10px" }}
                             autoFocus
                             margin="dense"
                             id="standard-search"
                             label="Category"
                             type="search"
-                            
+
                         />
-                               
+
                     </DialogContent>
                     <DialogActions>
 
-                        <Link to="/" style={{ textDecoration: 'none' }} >
-                            <Button onClick={this.handleClose} color="primary">
-                                Cancel
-                             </Button>
-                        </Link>
+                    <Button onClick={this.handleWithdraw} variant="contained" color="secondary">
+                            Withdraw
+                    </Button>
 
-                        <Button  color="primary">
-                            Subscribe
+
+                    <Button onClick={this.handleDeposite} variant="contained" color="primary">
+                            Deposit
                         </Button>
+
+
+                        <Button onClick={this.handleClose} color="primary">
+                            Cancel
+                        </Button>
+
+
+
                     </DialogActions>
                 </Dialog>
             </Router>

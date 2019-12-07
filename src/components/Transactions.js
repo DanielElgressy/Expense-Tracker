@@ -19,7 +19,6 @@ class Transactions extends Component {
                     {data.map(
                         t => <Transaction {...this.props} transaction={t} /> 
                         )}
-                        {/* <Transaction {...this.props} /> */}
             </TableBody>
         )
 
