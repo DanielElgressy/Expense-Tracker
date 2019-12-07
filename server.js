@@ -12,7 +12,6 @@ const transactionSchema  = new Schema ({
     vendor: String
 })
 
-
 const Transaction =  mongoose.model("Transaction", transactionSchema )
 
 
@@ -32,7 +31,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 //    await thing.save()
 // })
 
-
+     
 // app.post('/thing',async function(req,res){
 //    const thing = new Thing(req.body)
 //    await thing.save()

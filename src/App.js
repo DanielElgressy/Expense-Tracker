@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import Operations from './components/Operations';
 
 
 
@@ -84,7 +85,7 @@ class App extends Component {
                 </Button>
               </Link>
 
-              <Link to="/" style={{ textDecoration: 'none' }}>
+              <Link to="/operations" style={{ textDecoration: 'none' }}>
                 <Button variant="contained" color="primary">
                   Operations
                 </Button>
@@ -100,17 +101,17 @@ class App extends Component {
               <Table className="table" aria-label="simple table">
                 <TableHead className="tHeader">
                   <TableRow >
-
                     <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Amount</TableCell>
                     <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Category</TableCell>
                     <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Vendor</TableCell>
                   <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>action</TableCell>
                   </TableRow>
                 </TableHead>
-                <Route path="/" exact render={() => <Transactions state={state}  removeTransaction={this.removeTransaction}/>} />
+                <Route path="/"  exact render={() => <Transactions state={state}  removeTransaction={this.removeTransaction}/>} />
               </Table>
             </Paper>
 
+            <Route path="/operations" exact render={() => <Operations state={state}/>} />
 
           </div>
 
