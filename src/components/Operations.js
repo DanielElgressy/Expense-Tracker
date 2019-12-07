@@ -22,6 +22,10 @@ class Operations extends Component {
         console.log("close")
     }
 
+    handleInput (e) {
+        console.log(e.target.value)
+    }
+ 
     render() {
 
         return (
@@ -33,7 +37,7 @@ class Operations extends Component {
                         <DialogContentText>
                             please decribe transaction
                         </DialogContentText>
-                        <TextField style={{ margin: "10px"}}
+                        <TextField onChange={this.handleInput} style={{ margin: "10px"}} 
                             autoFocus
                             margin="dense"
                             id="standard-required"
