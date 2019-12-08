@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import './App.css';
 import Button from '@material-ui/core/Button';
-import { BrowserRouter as Router, Route , Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import Transactions from './components/Transactions';
 import Operations from './components/Operations';
 import ControlPanel from './components/ControlPanel';
+import axios from 'axios'
 
 
 
@@ -13,18 +14,13 @@ class App extends Component {
     super()
     this.state = {
       data:
-        [
-          { createDate: "01/01/2018", amount: 3200, vendor: "Elevation", category: "Salary", id: 1 },
-          { createDate: "01/01/2018", amount: -7, vendor: "Runescape", category: "Entertainment", id: 2 },
-          { createDate: "01/01/2018", amount: -20, vendor: "Subway", category: "Food", id: 3 },
-          { createDate: "01/01/2018", amount: -98, vendor: "La Baguetterie", category: "Food", id: 4 }
-        ]
+        []
       ,
       dialogBox: false
     }
   }
-  
-  findTransByCategory(category){
+
+  findTransByCategory(category) {
     const dataArr = this.state.data
     const findTransaction = dataArr.find(c => c.category === category)
     console.log(findTransaction)
@@ -47,37 +43,60 @@ class App extends Component {
     })
   }
 
-  removeTransaction = transID => {
-    let newData = [...this.state.data]
-    const transaction = newData.findIndex(t => t.id === transID)
-    newData.splice(transaction, 1)
+  removeTransaction = async (transID) => {
+
+    console.log(transID)
+    await axios.delete(`http://localhost:3001/transaction/${transID}`)
+    .then(console.log(transID))
+
+
+
+    let transactions = await axios.get("http://localhost:3001/transactions")
     this.setState({
-      data: newData
+      data: transactions.data
     })
+
+    // let newData = [...this.state.data]
+    // const transaction = newData.findIndex(t => t.id === transID)
+    // newData.splice(transaction, 1)
+    // this.setState({
+    //   data: newData
+    // })
   }
 
-  addTransaction = (trans) => {
-    let newData = [...this.state.data]
-    let newTrans = trans
-    newData.unshift(newTrans)
+  addTransaction = async (trans) => {
+    console.log(trans)
+    // let newData = [...this.state.data]
+    // let newTrans = trans
+    // newData.unshift(newTrans)
 
 
-    let balance = 0   //ירוץ על המערך לאחר הפעולה שביצעתי למשיכה או הפקדה
-    for (let i = 0; i < newData.length; i++) {
-      balance += newData[i].amount
-    }
+    // let balance = 0   //ירוץ על המערך לאחר הפעולה שביצעתי למשיכה או הפקדה
+    // for (let i = 0; i < newData.length; i++) {
+    //   balance += newData[i].amount
+    // }
 
-    if (balance < 500 & trans.amount < 0) {   //גם פחות מהרף שאני מציב וגם נלחץ על כפתור משיכה שמאופיין במינוס
-      alert("you dont have alot of money, calm down")
-    } else {
-      this.setState({
-        data: newData
-      }, () => {
-        this.changeDialogValue()
-      })
-    }
+    // if (balance < 500 & trans.amount < 0) {   //גם פחות מהרף שאני מציב וגם נלחץ על כפתור משיכה שמאופיין במינוס
+    //   alert("you dont have alot of money, calm down")
+    // } else {
+
+    await axios.post("http://localhost:3001/transaction", trans)
+      .then((response) => { console.log(response.data) })
 
 
+    let transactions = await axios.get("http://localhost:3001/transactions")
+    this.setState({
+      data: transactions.data
+    }, this.changeDialogValue())
+  }
+
+
+  componentDidMount = async () => {
+
+    let transactions = await axios.get("http://localhost:3001/transactions")
+    this.setState({
+      data: transactions.data
+    })
   }
 
   render() {
@@ -94,22 +113,22 @@ class App extends Component {
 
             <div id="main-links">
 
-            <Link to="/" style={{ textDecoration: 'none', paddingRight: "5px"}}>
-              <Button variant="contained" color="primary" >
-                Main
+              <Link to="/" style={{ textDecoration: 'none', paddingRight: "5px" }}>
+                <Button variant="contained" color="primary" >
+                  Main
               </Button>
-            </Link>
+              </Link>
 
 
               <Button variant="contained" color="primary" onClick={this.changeDialogValue}>
                 Operations
               </Button>
 
-              <Link to="/controlpanel" style={{ textDecoration: 'none', paddingLeft: "5px"}}>
-              <Button variant="contained" color="primary" >
-                Statistics
+              <Link to="/controlpanel" style={{ textDecoration: 'none', paddingLeft: "5px" }}>
+                <Button variant="contained" color="primary" >
+                  Statistics
               </Button>
-            </Link>
+              </Link>
 
             </div>
 
@@ -118,8 +137,8 @@ class App extends Component {
           <div className="app">
 
             <Route path="/" exact render={() => <Transactions state={state} removeTransaction={this.removeTransaction} />} />
-           <Route path="/" exact render={() => <Operations state={state} addTransaction={this.addTransaction} changeDialogValue={this.changeDialogValue} /> } />
-            <Route path="/controlpanel"  exact render={() => <ControlPanel state={state} />} />
+            <Route path="/" exact render={() => <Operations state={state} addTransaction={this.addTransaction} changeDialogValue={this.changeDialogValue} />} />
+            <Route path="/controlpanel" exact render={() => <ControlPanel state={state} />} />
 
           </div>
 

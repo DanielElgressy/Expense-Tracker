@@ -11,42 +11,42 @@ import Paper from '@material-ui/core/Paper';
 
 class ControlPanel extends Component {
 
-    
+
 
     render() {
-        const TablefontWeight= 800
+        const TablefontWeight = 800
         const TableTextAlign = "center"
         const data = this.props.state.data
-        
+        console.log(this.props.state.data)
 
         return (
 
 
-<Paper className="root">
-<Table className="table" aria-label="simple table">
-  <TableHead className="tHeader">
-    <TableRow >
-      <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Create Date</TableCell>
-      <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Amount ($)</TableCell>
-      <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Category</TableCell>
-      <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Vendor</TableCell>
-      <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>action</TableCell>
-    </TableRow>
-  </TableHead>
+            <Paper className="root">
+                <Table className="table" aria-label="simple table">
+                    <TableHead className="tHeader">
+                        <TableRow >
+                            <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight }}>Create Date</TableCell>
+                            <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight }}>Amount ($)</TableCell>
+                            <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight }}>Category</TableCell>
+                            <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight }}>Vendor</TableCell>
+                            <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight }}>action</TableCell>
+                        </TableRow>
+                    </TableHead>
 
-  <TableBody>
-    {data.map(
-          t => <Transaction {...this.props} transaction={t} /> 
-   )}
-            </TableBody>
-  
-</Table>
-</Paper>
+                    <TableBody>
+                        {data.map(
+                            t =>  <Transaction {...this.props} transaction={t} />
+                        )}
+                    </TableBody>
+
+                </Table>
+            </Paper>
 
 
 
         )
-        }
+    }
 }
 
 

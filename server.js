@@ -10,8 +10,7 @@ const transactionSchema  = new Schema ({
     amount: Number,
     category: String,
     vendor: String,
-    date: Date,
-    id: Number
+    date: Date
 })
 
 const Transaction =  mongoose.model("Transaction", transactionSchema )
@@ -21,6 +20,13 @@ const Transaction =  mongoose.model("Transaction", transactionSchema )
 // app.use(express.static(path.join(__dirname, 'node_modules')))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(function (req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization, Content-Length, X-Requested-With')
+
+    next()
+})
 
 app.get('/transactions',async function(req,res){
    const transactions =await  Transaction.find({})
@@ -31,14 +37,16 @@ app.get('/transactions',async function(req,res){
 app.post('/transaction',async function(req,res){
    const transaction = new Transaction(req.body)
    await transaction.save()
-   res.end()
+   res.send(transaction)
 })
 
 app.delete('/transaction/:transactionID', async function (req, res) {
     let transactionID = req.params.transactionID
-       let deleteTransaction = await Transaction.remove({
-        id: transactionID
+    console.log(transactionID)
+    await Transaction.findByIdAndRemove({
+       _id: transactionID
     })
+    console.log(transactionID)
     res.send(`Transaction: ${transactionID} deleted from DB`) 
 })
 

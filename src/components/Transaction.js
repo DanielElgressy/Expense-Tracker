@@ -3,14 +3,15 @@ import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-
+import Moment from 'react-moment'
 
 
 class Transaction extends Component {
 
 
      removeTransaction = () => {
-         const transactionID = this.props.transaction.id
+         const transactionID = this.props.transaction._id
+         console.log(transactionID)
          this.props.removeTransaction(transactionID)
     }
 
@@ -21,7 +22,11 @@ class Transaction extends Component {
 
         return (
             <TableRow key={transaction.id}>
-                <TableCell align={TableTextAlign}>{transaction.createDate}</TableCell>
+                <TableCell align={TableTextAlign}>
+                    <Moment format="YYYY/MM/DD HH:MM" >
+                   {transaction.date}
+                   </Moment>
+                    </TableCell>
                 <TableCell style={{ color: (transaction.amount < 0) ? 'red' : 'none'}} align={TableTextAlign}>{transaction.amount}</TableCell>
                 <TableCell align={TableTextAlign}>{transaction.category}</TableCell>
                 <TableCell align={TableTextAlign}>{transaction.vendor}</TableCell>
