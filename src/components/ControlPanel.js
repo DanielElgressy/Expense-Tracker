@@ -13,6 +13,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Transaction from './Transaction';
+import Group from './Grouping';
 
 
 
@@ -29,7 +30,7 @@ class ControlPanel extends Component {
 
 
         return (
-            <Router>
+            
                 <div >
                     <ExpansionPanel>
                         <ExpansionPanelSummary
@@ -56,7 +57,7 @@ class ControlPanel extends Component {
                                         <TableBody>
                                             
                                             {state.data.map(
-                                                t => <Transaction {...this.props} transaction={t} />
+                                                t => <Group {...this.props} transaction={t} />
                                             )}
                                         </TableBody>
 
@@ -72,10 +73,7 @@ class ControlPanel extends Component {
                 </div>
 
 
-
-
-                {/* <div>Hello</div> */}
-            </Router>
+            
         );
     }
 }
