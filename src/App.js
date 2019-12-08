@@ -1,19 +1,10 @@
 import React, { Component } from 'react';
 import './App.css';
 import Button from '@material-ui/core/Button';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route , Link } from 'react-router-dom';
 import Transactions from './components/Transactions';
-// import Transaction from './components/Transaction';
-
-import Table from '@material-ui/core/Table';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-// import InputLabel from '@material-ui/core/InputLabel';
-// import FormControl from '@material-ui/core/FormControl';
-// import Select from '@material-ui/core/Select';
 import Operations from './components/Operations';
+import ControlPanel from './components/ControlPanel';
 
 
 
@@ -28,9 +19,15 @@ class App extends Component {
           { createDate: "01/01/2018", amount: -20, vendor: "Subway", category: "Food", id: 3 },
           { createDate: "01/01/2018", amount: -98, vendor: "La Baguetterie", category: "Food", id: 4 }
         ]
-        ,
+      ,
       dialogBox: false
-    }   
+    }
+  }
+  
+  findTransByCategory(category){
+    const dataArr = this.state.data
+    const findTransaction = dataArr.find(c => c.category === category)
+    console.log(findTransaction)
   }
 
   showBalance() {
@@ -42,20 +39,20 @@ class App extends Component {
     return balance.toLocaleString()
   }
 
-  changeDialogValue = () =>{
+  changeDialogValue = () => {
     const currentValue = this.state.dialogBox
-    let opposite = !currentValue 
+    let opposite = !currentValue
     this.setState({
-      dialogBox : opposite
-    })    
+      dialogBox: opposite
+    })
   }
 
   removeTransaction = transID => {
     let newData = [...this.state.data]
     const transaction = newData.findIndex(t => t.id === transID)
-    newData.splice(transaction,1)
+    newData.splice(transaction, 1)
     this.setState({
-      data : newData
+      data: newData
     })
   }
 
@@ -70,24 +67,23 @@ class App extends Component {
       balance += newData[i].amount
     }
 
-     if (balance < 500 & trans.amount < 0 ) {   //גם פחות מהרף שאני מציב וגם נלחץ על כפתור משיכה שמאופיין במינוס
-       alert("you dont havee alot of money, calm down")
-     } else {
+    if (balance < 500 & trans.amount < 0) {   //גם פחות מהרף שאני מציב וגם נלחץ על כפתור משיכה שמאופיין במינוס
+      alert("you dont have alot of money, calm down")
+    } else {
       this.setState({
-        data : newData
-      } , () => {
+        data: newData
+      }, () => {
         this.changeDialogValue()
       })
-     }
-   
-    
+    }
+
+
   }
 
   render() {
     const state = this.state;
-    const TablefontWeight= 800
-    const TableTextAlign = "center"
-    
+
+
     return (
       <Router>
         <div className="background">
@@ -95,49 +91,35 @@ class App extends Component {
             <h2>Expense Tracker</h2>
             <h4 id="h4">Bank Balance: ${this.showBalance()}</h4>
 
-            {/* <FormControl>
-              <InputLabel htmlFor="demo-dialog-native">Age</InputLabel>
-              <Select
-                native
-                value="age"
-                onChange={handleChange}
-                input={<Input id="demo-dialog-native" />}
-              >
-                <option value="" />
-                <option value={10}>Ten</option>
-                <option value={20}>Twenty</option>
-                <option value={30}>Thirty</option>
-              </Select>
-            </FormControl> */}
-
 
             <div id="main-links">
-                <Button variant="contained" color="primary" onClick={this.changeDialogValue}>
-                  Operations
-                </Button>
+
+            <Link to="/" style={{ textDecoration: 'none', paddingRight: "5px"}}>
+              <Button variant="contained" color="primary" >
+                Main
+              </Button>
+            </Link>
+
+
+              <Button variant="contained" color="primary" onClick={this.changeDialogValue}>
+                Operations
+              </Button>
+
+              <Link to="/controlpanel" style={{ textDecoration: 'none', paddingLeft: "5px"}}>
+              <Button variant="contained" color="primary" >
+                Statistics
+              </Button>
+            </Link>
+
             </div>
 
           </div>
 
-
           <div className="app">
 
-            <Paper className="root">
-              <Table className="table" aria-label="simple table">
-                <TableHead className="tHeader">
-                  <TableRow >
-                    <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Create Date</TableCell>
-                    <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Amount ($)</TableCell>
-                    <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Category</TableCell>
-                    <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>Vendor</TableCell>
-                    <TableCell align={TableTextAlign} style={{ fontWeight: TablefontWeight}}>action</TableCell>
-                  </TableRow>
-                </TableHead>
-                <Route path="/"  exact render={() => <Transactions state={state}  removeTransaction={this.removeTransaction}/>} />
-              </Table>
-            </Paper>
-
-            <Operations state={state} addTransaction={this.addTransaction} changeDialogValue={this.changeDialogValue} />
+            <Route path="/" exact render={() => <Transactions state={state} removeTransaction={this.removeTransaction} />} />
+           <Route path="/" exact render={() => <Operations state={state} addTransaction={this.addTransaction} changeDialogValue={this.changeDialogValue} /> } />
+            <Route path="/controlpanel"  exact render={() => <ControlPanel state={state} />} />
 
           </div>
 

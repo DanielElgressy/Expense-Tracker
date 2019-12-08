@@ -61,6 +61,7 @@ class Operations extends Component {
     }
 
     handleVendorInput = (e) => {
+        console.log(e.target.name)
         this.setState({
             vendor: e.target.value
         })
@@ -75,7 +76,13 @@ class Operations extends Component {
     }
 
     handleDeposite = () => {
-        this.sendAllInputs()
+        // this.sendAllInputs()
+
+
+        this.setState({
+            amount : parseInt(this.state.amount)
+        }, this.sendAllInputs)
+        // this.sendAllInputs()
     }
 
     handleWithdraw = () => {
@@ -98,7 +105,7 @@ class Operations extends Component {
 
         return (
             <Router>
-
+                            
                 <Dialog open={this.props.state.dialogBox} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Adding a Transaction</DialogTitle>
                     <DialogContent>
@@ -112,12 +119,13 @@ class Operations extends Component {
                             
 
                         />
-                        <TextField onChange={this.handleVendorInput} style={{ margin: "10px" }}
+                        <TextField  onChange={this.handleVendorInput} style={{ margin: "10px" }}
                             autoFocus
                             margin="dense"
                             id="standard-search"
                             label="Vendor"
                             type="search"
+                            
 
                         />
                         <TextField onChange={this.handleCategoryInput} style={{ margin: "10px" }}
