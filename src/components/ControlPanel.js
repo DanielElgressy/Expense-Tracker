@@ -20,25 +20,55 @@ import Group from './Grouping';
 
 class ControlPanel extends Component {
 
+    findCategory = () => {
+        let transactions = this.props.state.data
+        let categories = []
+        for (let i = 0; i < transactions.length; i++) {
+            if (!categories.includes(transactions[i].category)) {
+                categories.push(transactions[i].category)
+            }
+        }
+        console.log(categories)
+        return categories
+    }
+
+    sortByCategory = () => {
+        let categories = this.findCategory()
+        let transactions = this.props.state.data
+        let result = []
+        for (let i = 0; i < categories.length; i++) {
+            let arr = transactions.filter(c => c.category === categories[i]).map(c => c)
+            result.push(arr)
+        }
+        console.log(result)
+        return result
+    }
+
+
 
     render() {
 
         const state = this.props.state
-
         const TablefontWeight= 800
         const TableTextAlign = "center"
+        
+        let categoriesList = this.findCategory()
+        let sortedList = this.sortByCategory()
+        console.log(categoriesList)
+        console.log(sortedList)
 
 
         return (
             
                 <div >
+                    {sortedList.map( (m, i) => <div key={i}> 
                     <ExpansionPanel>
                         <ExpansionPanelSummary
                             expandIcon={<ExpandMoreIcon />}
                             aria-controls="panel1a-content"
                             id="panel1a-header"
                         >
-                            <Typography >Catrgory 1</Typography>
+                            <Typography > {m[0].category} </Typography>
                         </ExpansionPanelSummary>
                         <ExpansionPanelDetails>
                             <Typography>
@@ -56,7 +86,7 @@ class ControlPanel extends Component {
 
                                         <TableBody>
                                             
-                                            {state.data.map(
+                                            {m.map(
                                                 t => <Group {...this.props} transaction={t} />
                                             )}
                                         </TableBody>
@@ -69,7 +99,7 @@ class ControlPanel extends Component {
                         </ExpansionPanelDetails>
                     </ExpansionPanel>
                   
-
+                 </div>   )}
                 </div>
 
 

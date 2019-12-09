@@ -29,7 +29,7 @@ app.use(function (req, res, next) {
 })
 
 app.get('/transactions',async function(req,res){
-   const transactions =await  Transaction.find({})
+   const transactions = await  Transaction.find({}).sort({date: -1})
    res.send(transactions)
 })
 

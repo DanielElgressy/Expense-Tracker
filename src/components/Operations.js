@@ -27,26 +27,27 @@ class Operations extends Component {
     }
 
     sendAllInputs = () => {
-        // const fullDate    = new Date()
-        // const getYear     = fullDate.getFullYear()
-        // const getmonth    = fullDate.getMonth() + 1
-        // const getDay      = fullDate.getDay() + 1
-        // const getDate     = getDay + "/" + getmonth +"/" + getYear
-        // const getHours    = fullDate.getHours()
-        // const getMinutes  = fullDate.getMinutes()
-        // const getTime     = getHours + ":" + getMinutes
-        // const currentDate = getDate +" " + getTime
 
-        // // let randomID = Math.floor(Math.random() * 100) + 1
-        // let transCreateDate = currentDate
+
         let currentTime = new Date()
         console.log(currentTime)
+        
+        // const currentState = this.state
+
+        // if(this.state.amount === Nan) {
+            // console.log("amount is kloom")
+        // }
+        // for (let key in currentState){
+        //     if(currentState[key]){
+        //       console.log(currentState[key])
+        //     }
+         
 
         this.setState({
             date: currentTime,
         }, () => {
             let newTranstation = { ...this.state }
-            console.log(newTranstation)
+            console.log(newTranstation.date)
             this.props.addTransaction(newTranstation)
         })
     }
@@ -78,13 +79,10 @@ class Operations extends Component {
     }
 
     handleDeposite = () => {
-        // this.sendAllInputs()
-
-
+        alert("transaction added ")
         this.setState({
             amount : parseInt(this.state.amount)
         }, this.sendAllInputs)
-        // this.sendAllInputs()
     }
 
     handleWithdraw = () => {

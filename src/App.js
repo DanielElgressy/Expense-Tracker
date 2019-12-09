@@ -26,15 +26,6 @@ class App extends Component {
     console.log(findTransaction)
   }
 
-  showBalance() {
-    const dataArr = this.state.data
-    let balance = 0
-    for (let i = 0; i < dataArr.length; i++) {
-      balance += dataArr[i].amount
-    }
-    return balance.toLocaleString()
-  }
-
   changeDialogValue = () => {
     const currentValue = this.state.dialogBox
     let opposite = !currentValue
@@ -48,7 +39,6 @@ class App extends Component {
     console.log(transID)
     await axios.delete(`http://localhost:3001/transaction/${transID}`)
     .then(console.log(transID))
-
 
 
     let transactions = await axios.get("http://localhost:3001/transactions")
@@ -83,7 +73,7 @@ class App extends Component {
     await axios.post("http://localhost:3001/transaction", trans)
       .then((response) => { console.log(response.data) })
 
-
+    
     let transactions = await axios.get("http://localhost:3001/transactions")
     this.setState({
       data: transactions.data
@@ -96,8 +86,22 @@ class App extends Component {
     let transactions = await axios.get("http://localhost:3001/transactions")
     this.setState({
       data: transactions.data
-    })
-  }
+    } ) 
+
+    this.showBalance()
+    }
+
+     showBalance = () => {
+      let dataArr = [...this.state.data]
+      let newBalance = 0
+      dataArr.map( d => newBalance += d.amount )
+      let formatedBalance = newBalance.toLocaleString()
+      this.setState({
+        balance: formatedBalance
+      }) 
+    }
+   
+  
 
   render() {
     const state = this.state;
@@ -108,7 +112,7 @@ class App extends Component {
         <div className="background">
           <div className="App-header">
             <h2>Expense Tracker</h2>
-            <h4 id="h4">Bank Balance: ${this.showBalance()}</h4>
+            <h4 id="h4">Bank Balance: ${this.state.balance}</h4>
 
 
             <div id="main-links">

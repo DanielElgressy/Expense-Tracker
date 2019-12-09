@@ -24,8 +24,9 @@ class Transaction extends Component {
             <TableRow key={transaction.id}>
                 <TableCell align={TableTextAlign}>
                     <Moment format="YYYY/MM/DD HH:MM" >
-                   {transaction.date}
-                   </Moment>
+                        {transaction.date}
+                        </Moment>
+                   
                     </TableCell>
                 <TableCell style={{ color: (transaction.amount < 0) ? 'red' : 'none'}} align={TableTextAlign}>{transaction.amount}</TableCell>
                 <TableCell align={TableTextAlign}>{transaction.category}</TableCell>
