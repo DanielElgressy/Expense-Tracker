@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-import { BrowserRouter as Router } from 'react-router-dom';
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -12,7 +11,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Transaction from './Transaction';
 import Group from './Grouping';
 
 
@@ -28,7 +26,7 @@ class ControlPanel extends Component {
                 categories.push(transactions[i].category)
             }
         }
-        console.log(categories)
+        // console.log(categories)
         return categories
     }
 
@@ -36,6 +34,7 @@ class ControlPanel extends Component {
         let categories = this.findCategory()
         let transactions = this.props.state.data
         let result = []
+        
         for (let i = 0; i < categories.length; i++) {
             let arr = transactions.filter(c => c.category === categories[i]).map(c => c)
             result.push(arr)
@@ -44,11 +43,22 @@ class ControlPanel extends Component {
         return result
     }
 
+    amountPerCategory = () => {
+        let listPerCategory = this.sortByCategory()
+        console.log(listPerCategory)
+        let newArry = []
+        for( let i = 0; i < listPerCategory.length ; i++){
+            let sum = 0
+            listPerCategory[i].map( c =>  sum =+ c.amount)
+            newArry.push(sum)
+            console.log(sum)
+            }
+            return newArry
+    }
 
 
     render() {
 
-        const state = this.props.state
         const TablefontWeight= 800
         const TableTextAlign = "center"
         
@@ -56,12 +66,13 @@ class ControlPanel extends Component {
         let sortedList = this.sortByCategory()
         console.log(categoriesList)
         console.log(sortedList)
-
+        let amounting = this.amountPerCategory()
+        console.log(amounting)
 
         return (
             
                 <div >
-                    {sortedList.map( (m, i) => <div key={i}> 
+                    {sortedList.map( (m, i) => <div className="group" key={i}> 
                     <ExpansionPanel>
                         <ExpansionPanelSummary
                             expandIcon={<ExpandMoreIcon />}
@@ -87,7 +98,7 @@ class ControlPanel extends Component {
                                         <TableBody>
                                             
                                             {m.map(
-                                                t => <Group {...this.props} transaction={t} />
+                                                (t, i) => <Group {...this.props} transaction={t} key={i} />
                                             )}
                                         </TableBody>
 

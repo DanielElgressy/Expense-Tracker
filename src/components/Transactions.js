@@ -36,7 +36,7 @@ class ControlPanel extends Component {
 
                     <TableBody>
                         {data.map(
-                            t =>  <Transaction {...this.props} transaction={t} />
+                           (t, i) =>  <Transaction {...this.props} transaction={t} key={i}/>
                         )}
                     </TableBody>
 

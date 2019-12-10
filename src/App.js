@@ -14,17 +14,20 @@ class App extends Component {
     super()
     this.state = {
       data:
-        []
+       []
       ,
       dialogBox: false
     }
   }
 
-  findTransByCategory(category) {
-    const dataArr = this.state.data
-    const findTransaction = dataArr.find(c => c.category === category)
-    console.log(findTransaction)
+  showBalance = () => {
+    let dataArr = [...this.state.data]
+    let newBalance = 0
+    dataArr.map( d => newBalance += d.amount )
+    let formatedBalance = newBalance.toLocaleString()
+    return formatedBalance
   }
+
 
   changeDialogValue = () => {
     const currentValue = this.state.dialogBox
@@ -34,74 +37,47 @@ class App extends Component {
     })
   }
 
+
+  componentDidMount = async () => {
+    let transactions = await axios.get("http://localhost:3001/transactions")
+    this.state.data = transactions.data
+    this.setState({   
+      data: transactions.data
+    }) 
+    }
+
+
+
   removeTransaction = async (transID) => {
 
     console.log(transID)
     await axios.delete(`http://localhost:3001/transaction/${transID}`)
-    .then(console.log(transID))
 
 
     let transactions = await axios.get("http://localhost:3001/transactions")
     this.setState({
       data: transactions.data
     })
-
-    // let newData = [...this.state.data]
-    // const transaction = newData.findIndex(t => t.id === transID)
-    // newData.splice(transaction, 1)
-    // this.setState({
-    //   data: newData
-    // })
   }
 
   addTransaction = async (trans) => {
     console.log(trans)
-    // let newData = [...this.state.data]
-    // let newTrans = trans
-    // newData.unshift(newTrans)
-
-
-    // let balance = 0   //ירוץ על המערך לאחר הפעולה שביצעתי למשיכה או הפקדה
-    // for (let i = 0; i < newData.length; i++) {
-    //   balance += newData[i].amount
-    // }
-
-    // if (balance < 500 & trans.amount < 0) {   //גם פחות מהרף שאני מציב וגם נלחץ על כפתור משיכה שמאופיין במינוס
-    //   alert("you dont have alot of money, calm down")
-    // } else {
-
-    await axios.post("http://localhost:3001/transaction", trans)
-      .then((response) => { console.log(response.data) })
-
+    
+     await axios.post("http://localhost:3001/transaction", trans)
     
     let transactions = await axios.get("http://localhost:3001/transactions")
     this.setState({
       data: transactions.data
     }, this.changeDialogValue())
+
   }
 
-
-  componentDidMount = async () => {
-
-    let transactions = await axios.get("http://localhost:3001/transactions")
-    this.setState({
-      data: transactions.data
-    } ) 
-
-    this.showBalance()
-    }
-
-     showBalance = () => {
-      let dataArr = [...this.state.data]
-      let newBalance = 0
-      dataArr.map( d => newBalance += d.amount )
-      let formatedBalance = newBalance.toLocaleString()
-      this.setState({
-        balance: formatedBalance
-      }) 
-    }
-   
   
+  findTransByCategory(category) {
+    const dataArr = this.state.data
+    const findTransaction = dataArr.find(c => c.category === category)
+    console.log(findTransaction)
+  }
 
   render() {
     const state = this.state;
@@ -112,7 +88,7 @@ class App extends Component {
         <div className="background">
           <div className="App-header">
             <h2>Expense Tracker</h2>
-            <h4 id="h4">Bank Balance: ${this.state.balance}</h4>
+            <h4 id="h4" style={{ color: (this.showBalance() < 500) ? 'tomato' : 'white'}} >Bank Balance: ${this.showBalance()}</h4>
 
 
             <div id="main-links">
@@ -130,7 +106,7 @@ class App extends Component {
 
               <Link to="/controlpanel" style={{ textDecoration: 'none', paddingLeft: "5px" }}>
                 <Button variant="contained" color="primary" >
-                  Statistics
+                  Stats
               </Button>
               </Link>
 

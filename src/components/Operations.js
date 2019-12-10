@@ -21,9 +21,6 @@ class Operations extends Component {
             amount: "", vendor: "", category: ""
 
         }
-        this.handleClose = this.handleClose.bind(this);
-        this.handleAmountInput = this.handleAmountInput.bind(this);
-
     }
 
     sendAllInputs = () => {
@@ -31,29 +28,25 @@ class Operations extends Component {
 
         let currentTime = new Date()
         console.log(currentTime)
-        
-        // const currentState = this.state
+        console.log(this.state) 
 
-        // if(this.state.amount === Nan) {
-            // console.log("amount is kloom")
-        // }
-        // for (let key in currentState){
-        //     if(currentState[key]){
-        //       console.log(currentState[key])
-        //     }
-         
+        if(!this.state.amount || !this.state.category || !this.state.vendor){
+            alert("whoooo something is missing, Please fill up all the details and try again")
+            return
+        } else {alert("Transaction added")}
+
 
         this.setState({
             date: currentTime,
         }, () => {
-            let newTranstation = { ...this.state }
-            console.log(newTranstation.date)
-            this.props.addTransaction(newTranstation)
+            let newTransaction = { ...this.state }
+            console.log(newTransaction)
+            this.props.addTransaction(newTransaction)
         })
     }
 
 
-    handleAmountInput(e) {
+    handleAmountInput = (e) => {
         if (e.target.value < 0) {
             alert("please insert a positive number")
         } else {
@@ -79,7 +72,6 @@ class Operations extends Component {
     }
 
     handleDeposite = () => {
-        alert("transaction added ")
         this.setState({
             amount : parseInt(this.state.amount)
         }, this.sendAllInputs)
@@ -88,6 +80,7 @@ class Operations extends Component {
     handleWithdraw = () => {
         let minusizing = this.state.amount * -1
         console.log(this.props.state)
+        
         this.setState({
             amount : minusizing
         }, () => {
@@ -96,7 +89,7 @@ class Operations extends Component {
         })
     }
 
-    handleClose() {
+    handleClose = () => {
         this.props.changeDialogValue()
     }
 
@@ -117,7 +110,6 @@ class Operations extends Component {
                             label="Amount"
                             type="number"
                             
-
                         />
                         <TextField  onChange={this.handleVendorInput} style={{ margin: "10px" }}
                             autoFocus
@@ -125,7 +117,6 @@ class Operations extends Component {
                             id="standard-search"
                             label="Vendor"
                             type="search"
-                            
 
                         />
                         <TextField onChange={this.handleCategoryInput} style={{ margin: "10px" }}

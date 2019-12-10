@@ -23,12 +23,12 @@ class Transaction extends Component {
         return (
             <TableRow key={transaction.id}>
                 <TableCell align={TableTextAlign}>
-                    <Moment format="YYYY/MM/DD HH:MM" >
+                    <Moment format="YYYY/MM/DD" >
                         {transaction.date}
                         </Moment>
                    
                     </TableCell>
-                <TableCell style={{ color: (transaction.amount < 0) ? 'red' : 'none'}} align={TableTextAlign}>{transaction.amount}</TableCell>
+                <TableCell style={{ color: (transaction.amount < 0) ? 'red' : 'green'}} align={TableTextAlign}>{transaction.amount}</TableCell>
                 <TableCell align={TableTextAlign}>{transaction.category}</TableCell>
                 <TableCell align={TableTextAlign}>{transaction.vendor}</TableCell>
                 <TableCell align={TableTextAlign}>

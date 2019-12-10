@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
 import Moment from 'react-moment'
 
 
 class Group extends Component {
 
-
-     removeTransaction = () => {
-         const transactionID = this.props.transaction._id
-         console.log(transactionID)
-         this.props.removeTransaction(transactionID)
-    }
 
     render() { 
 
@@ -21,9 +13,9 @@ class Group extends Component {
         const TableTextAlign = "center"
 
         return (
-            <TableRow key={transaction.id}>
+            <TableRow  key={transaction.id}>
                 <TableCell align={TableTextAlign}>
-                    <Moment format="YYYY/MM/DD HH:MM" >
+                    <Moment format="YYYY/MM/DD" >
                    {transaction.date}
                    </Moment>
                     </TableCell>
@@ -31,8 +23,6 @@ class Group extends Component {
                 <TableCell align={TableTextAlign}>{transaction.category}</TableCell>
                 <TableCell align={TableTextAlign}>{transaction.vendor}</TableCell>
                 <TableCell align={TableTextAlign}>
-
-                
 
                 </TableCell>
 

@@ -1,6 +1,5 @@
 const express = require('express')
 const mongoose = require('mongoose')
-const path = require('path')
 const bodyParser = require('body-parser')
 const app = express()
 mongoose.connect('mongodb://localhost/ExpensesDB',{ useNewUrlParser: true, useUnifiedTopology: true})
@@ -16,8 +15,7 @@ const transactionSchema  = new Schema ({
 const Transaction =  mongoose.model("Transaction", transactionSchema )
 
 
-// app.use(express.static(path.join(__dirname, 'src')))
-// app.use(express.static(path.join(__dirname, 'node_modules')))
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(function (req, res, next) {
@@ -30,10 +28,9 @@ app.use(function (req, res, next) {
 
 app.get('/transactions',async function(req,res){
    const transactions = await  Transaction.find({}).sort({date: -1})
-   res.send(transactions)
+    res.send(transactions)
 })
 
-     
 app.post('/transaction',async function(req,res){
    const transaction = new Transaction(req.body)
    await transaction.save()

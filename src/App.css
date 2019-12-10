@@ -7,6 +7,12 @@
   min-width: 650px;
 }
 
+.group{
+  padding: 8px;
+}
+
+
+
 .App-header {
   background-color: #282c34;
   min-height: 20vh;
