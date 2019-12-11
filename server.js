@@ -31,7 +31,7 @@ app.get('/transactions',async function(req,res){
     res.send(transactions)
 })
 
-app.post('/transaction',async function(req,res){
+app.post('/transaction',async function(req,res){ 
    const transaction = new Transaction(req.body)
    await transaction.save()
    res.send(transaction)

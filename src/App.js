@@ -120,7 +120,7 @@ class App extends Component {
             <Route path="/" exact render={() => <Operations state={state} addTransaction={this.addTransaction} changeDialogValue={this.changeDialogValue} />} />
             <Route path="/controlpanel" exact render={() => <ControlPanel state={state} />} />
 
-          </div>
+          </div> 
 
         </div>
       </Router>
