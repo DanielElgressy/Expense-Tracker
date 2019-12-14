@@ -87,7 +87,7 @@ class App extends Component {
       <Router>
         <div className="background">
           <div className="App-header">
-            <h2>Expense Tracker</h2>
+            <h2>expense Tracker</h2>
             <h4 id="h4" style={{ color: (this.showBalance() < 500) ? 'tomato' : 'white'}} >Bank Balance: ${this.showBalance()}</h4>
 
 
